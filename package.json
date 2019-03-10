@@ -16,7 +16,7 @@
   },
   "scripts": {
     "predeploy": "yarn build",
-    "deploy": "gh-pages -d build",
+    "deploy": "gh-pages -d dist",
     "start": "parcel index.html",
     "build": "parcel build index.html --out-dir dist && yarn deletemaps",
     "deletemaps": "find . -type f -name *.map -delete"
