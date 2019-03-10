@@ -10,6 +10,8 @@ import Footer from './components/Footer'
 import GlobalStats from './components/GlobalStats'
 import Menu from './components/Menu'
 
+import Graph from './components/Graph'
+
 class Layout extends React.Component {
   constructor(props) {
     super(props)
@@ -96,6 +98,20 @@ class Layout extends React.Component {
           rows: ['username', 'outgoingTradesTotal'],
         },
       ],
+      datasets: [
+        {
+          name: "Unboxings",
+          color: 'red',
+          values: this.randomData(),
+          chartType: 'bar'
+        },
+        {
+          name: "Awarded",
+          color: 'orange',
+          values: this.randomData(),
+          chartType: 'line'
+        },
+      ],
     }
   }
 
@@ -167,6 +183,10 @@ class Layout extends React.Component {
       })
   }
 
+  randomData = () => {
+    return Array.from({ length: 7 }, () => Math.floor(Math.random() * 10000))
+  }
+
   render() {
     const { tabs, currentTab, loading, firstEvent, globalStats } = this.state
 
@@ -188,6 +208,14 @@ class Layout extends React.Component {
                 events prior to this date are available from wax.
               </div>
             </article>
+            <Graph
+              title="Unboxings"
+              type="axis-mixed"
+              data={{
+                labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+                datasets: this.state.datasets,
+              }}
+            />
             <div className="columns">
               <div className="column is-one-fifth">
                 <Menu
