@@ -23,74 +23,87 @@ class Layout extends React.Component {
       tabs: [
         // REDUCTIONS
         {
-          label: 'Most Popular Site',
+          label: 'Site: Most Openings',
           action: 'listTopSites',
-          columns: ['Site', 'Unboxings'],
+          columns: ['Site URL', 'Openings'],
           rows: ['group', 'reduction'],
         },
-        // {
-        //   label: 'User Unboxed',
-        //   action: 'listTopUsers',
-        //   columns: ['User', 'Unboxings'],
-        //   rows: ['group', 'reduction'],
-        // },
         {
-          label: 'Most Popular Case',
-          action: 'listTopCases',
-          columns: ['Case', 'Openings'],
-          rows: ['group', 'reduction'],
+          label: 'Case: Most Openings',
+          action: 'listCaseMostOpenings',
+          columns: ['Case Name', 'Openings'],
+          rows: ['name', 'caseOpenings'],
         },
+        {
+          label: 'Case: Most Profitable',
+          action: 'listCaseMostProfitable',
+          columns: ['Case Name', 'Users Spent', 'Users Profited'],
+          rows: ['name', 'spent', 'profit'],
+        },
+        {
+          label: 'Case: Best ROI',
+          action: 'listCaseBestRoi',
+          columns: ['Case Name', 'Price', 'Average ROI'],
+          rows: ['name', 'price', 'averageProfit'],
+        },
+        {
+          label: 'Case: Most Awarded',
+          action: 'listCaseMostAwarded',
+          columns: ['Case Name', 'Awarded'],
+          rows: ['name', 'caseTotalAwarded'],
+        },
+        
         // leaderboards
         {
-          label: 'Case Unboxings',
+          label: 'User: Case Openings',
           action: 'caseOpenings',
-          columns: ['User', 'Unboxings'],
+          columns: ['User', 'Openings'],
           rows: ['username', 'caseOpenings'],
         },
         {
-          label: 'Case Awarded',
+          label: 'User: Case Awarded',
           action: 'caseTotalAwarded',
           columns: ['User', 'Awarded'],
           rows: ['username', 'caseTotalAwarded'],
         },
         {
-          label: 'Trade Profit',
+          label: 'User: Trade Profit',
           action: 'tradesProfit',
           columns: ['User', 'Profit'],
           rows: ['username', 'tradesProfit'],
         },
         {
-          label: 'Trade Value',
+          label: 'User: Trade Value',
           action: 'tradesTotalValue',
           columns: ['User', 'Value'],
           rows: ['username', 'tradesTotalValue'],
         },
         {
-          label: 'Trade Count',
+          label: 'User: Trade Count',
           action: 'tradesCount',
           columns: ['User', 'Count'],
           rows: ['username', 'tradesCount'],
         },
         {
-          label: 'Trades Incoming Count',
+          label: 'User: Trades Incoming Count',
           action: 'incomingTradesCount',
           columns: ['User', 'Count'],
           rows: ['username', 'incomingTradesCount'],
         },
         {
-          label: 'Trades Incoming Value',
+          label: 'User: Trades Incoming Value',
           action: 'incomingTradesTotal',
           columns: ['User', 'Value'],
           rows: ['username', 'incomingTradesTotal'],
         },
         {
-          label: 'Trades Outgoing Count',
+          label: 'User: Trades Outgoing Count',
           action: 'outgoingTradesCount',
           columns: ['User', 'Count'],
           rows: ['username', 'outgoingTradesCount'],
         },
         {
-          label: 'Trades Outgoing Value',
+          label: 'User: Trades Outgoing Value',
           action: 'outgoingTradesTotal',
           columns: ['User', 'Value'],
           rows: ['username', 'outgoingTradesTotal'],
@@ -163,6 +176,7 @@ class Layout extends React.Component {
         })
       })
       .catch(err => {
+        console.error(err)
         this.setState({ loading: false })
       })
   }
@@ -213,8 +227,8 @@ class Layout extends React.Component {
 }
 
 const main = async () => {
-  // const actions = await Actions('http://localhost:9001/')
-  const actions = await Actions('https://api.vunbox.com/')
+  const actions = await Actions('http://localhost:9001/')
+  // const actions = await Actions('https://api.vunbox.com/')
   return ReactDOM.render(
     <Layout actions={actions} />,
     document.getElementById('app')
