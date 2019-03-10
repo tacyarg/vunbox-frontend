@@ -52,7 +52,6 @@ class Layout extends React.Component {
           columns: ['Case Name', 'Awarded'],
           rows: ['name', 'caseTotalAwarded'],
         },
-        
         // leaderboards
         {
           label: 'User: Case Openings',
@@ -227,8 +226,8 @@ class Layout extends React.Component {
 }
 
 const main = async () => {
-  const actions = await Actions('http://localhost:9001/')
-  // const actions = await Actions('https://api.vunbox.com/')
+  // const actions = await Actions('http://localhost:9001/')
+  const actions = await Actions('https://api.vunbox.com/')
   return ReactDOM.render(
     <Layout actions={actions} />,
     document.getElementById('app')

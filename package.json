@@ -15,11 +15,11 @@
     "gh-pages": "^2.0.1"
   },
   "scripts": {
-    "predeploy": "rm -rf dist &&  parcel build index.html --out-dir dist --public-url /vunbox-frontend",
+    "predeploy": "rm -rf dist &&  parcel build index.html --out-dir dist",
     "deploy": "gh-pages -d dist",
     "start": "parcel index.html",
     "build": "parcel build index.html --out-dir dist && yarn deletemaps",
     "deletemaps": "find . -type f -name *.map -delete"
   },
-  "homepage": "https://waxmarketcap.com"
+  "homepage": "http://waxmarketcap.com"
 }
