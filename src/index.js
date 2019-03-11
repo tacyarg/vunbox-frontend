@@ -71,48 +71,48 @@ class Layout extends React.Component {
           columns: ['User', 'Awarded'],
           rows: ['username', 'caseTotalAwarded'],
         },
-        {
-          label: 'User: Trade Profit',
-          action: 'tradesProfit',
-          columns: ['User', 'Profit'],
-          rows: ['username', 'tradesProfit'],
-        },
-        {
-          label: 'User: Trade Value',
-          action: 'tradesTotalValue',
-          columns: ['User', 'Value'],
-          rows: ['username', 'tradesTotalValue'],
-        },
-        {
-          label: 'User: Trade Count',
-          action: 'tradesCount',
-          columns: ['User', 'Count'],
-          rows: ['username', 'tradesCount'],
-        },
-        {
-          label: 'User: Trades Incoming Count',
-          action: 'incomingTradesCount',
-          columns: ['User', 'Count'],
-          rows: ['username', 'incomingTradesCount'],
-        },
-        {
-          label: 'User: Trades Incoming Value',
-          action: 'incomingTradesTotal',
-          columns: ['User', 'Value'],
-          rows: ['username', 'incomingTradesTotal'],
-        },
-        {
-          label: 'User: Trades Outgoing Count',
-          action: 'outgoingTradesCount',
-          columns: ['User', 'Count'],
-          rows: ['username', 'outgoingTradesCount'],
-        },
-        {
-          label: 'User: Trades Outgoing Value',
-          action: 'outgoingTradesTotal',
-          columns: ['User', 'Value'],
-          rows: ['username', 'outgoingTradesTotal'],
-        },
+        // {
+        //   label: 'User: Trade Profit',
+        //   action: 'tradesProfit',
+        //   columns: ['User', 'Profit'],
+        //   rows: ['username', 'tradesProfit'],
+        // },
+        // {
+        //   label: 'User: Trade Value',
+        //   action: 'tradesTotalValue',
+        //   columns: ['User', 'Value'],
+        //   rows: ['username', 'tradesTotalValue'],
+        // },
+        // {
+        //   label: 'User: Trade Count',
+        //   action: 'tradesCount',
+        //   columns: ['User', 'Count'],
+        //   rows: ['username', 'tradesCount'],
+        // },
+        // {
+        //   label: 'User: Trades Incoming Count',
+        //   action: 'incomingTradesCount',
+        //   columns: ['User', 'Count'],
+        //   rows: ['username', 'incomingTradesCount'],
+        // },
+        // {
+        //   label: 'User: Trades Incoming Value',
+        //   action: 'incomingTradesTotal',
+        //   columns: ['User', 'Value'],
+        //   rows: ['username', 'incomingTradesTotal'],
+        // },
+        // {
+        //   label: 'User: Trades Outgoing Count',
+        //   action: 'outgoingTradesCount',
+        //   columns: ['User', 'Count'],
+        //   rows: ['username', 'outgoingTradesCount'],
+        // },
+        // {
+        //   label: 'User: Trades Outgoing Value',
+        //   action: 'outgoingTradesTotal',
+        //   columns: ['User', 'Value'],
+        //   rows: ['username', 'outgoingTradesTotal'],
+        // },
       ],
     }
   }
@@ -144,14 +144,19 @@ class Layout extends React.Component {
           money: true,
         },
         {
-          label: 'Total Trades',
-          value: globalStats.tradesCount,
-        },
-        {
-          label: 'Trade Value',
-          value: globalStats.tradesTotalValue,
+          label: `BEST UNBOXING: ${globalStats.bestItemUnboxed.name}`,
+          value: globalStats.bestItemUnboxed.price,
           money: true,
         },
+        // {
+        //   label: 'Total Trades',
+        //   value: globalStats.tradesCount,
+        // },
+        // {
+        //   label: 'Trade Value',
+        //   value: globalStats.tradesTotalValue,
+        //   money: true,
+        // },
       ],
     })
   }
