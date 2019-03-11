@@ -46,6 +46,12 @@ class Layout extends React.Component {
           columns: ['Case Name', 'Price', 'Avg. ROI'],
           rows: ['name', 'price', 'averageProfit'],
         },
+        // {
+        //   label: 'Case: Best Chance',
+        //   action: 'listCaseBestChance',
+        //   columns: ['Case Name', 'Price', 'Avg. ROI', 'chance'],
+        //   rows: ['name', 'price', 'averageProfit', 'chance'],
+        // },
         {
           label: 'Case: Most Awarded',
           action: 'listCaseMostAwarded',
