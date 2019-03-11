@@ -1,0 +1,11 @@
+apiVersion: 'v1'
+kind: Pod
+metadata:
+  name: vunbox-frontend
+  labels:
+    name: vunbox-frontend
+spec:
+  containers:
+    - name: vunbox-frontend
+      image: gcr.io/chipsgg-184323/vunbox-frontend
+      imagePullPolicy: Always
