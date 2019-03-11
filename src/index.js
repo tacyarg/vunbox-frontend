@@ -43,8 +43,8 @@ class Layout extends React.Component {
         {
           label: 'Case: Best ROI',
           action: 'listCaseBestRoi',
-          columns: ['Case Name', 'Price', 'Avg. ROI'],
-          rows: ['name', 'price', 'averageProfit'],
+          columns: ['Case Name', 'Price', 'ROI'],
+          rows: ['name', 'price', 'roi'],
         },
         // {
         //   label: 'Case: Best Chance',
