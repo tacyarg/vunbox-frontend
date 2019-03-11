@@ -54,13 +54,13 @@ class Layout extends React.Component {
         },
         // leaderboards
         {
-          label: 'User: Case Openings',
+          label: 'User: Most Openings',
           action: 'caseOpenings',
           columns: ['User', 'Openings'],
           rows: ['username', 'caseOpenings'],
         },
         {
-          label: 'User: Case Awarded',
+          label: 'User: Most Awarded',
           action: 'caseTotalAwarded',
           columns: ['User', 'Awarded'],
           rows: ['username', 'caseTotalAwarded'],
