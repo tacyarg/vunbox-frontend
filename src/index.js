@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import './static/scss/app.scss'
 import Actions from './libs/actions'
 import lodash from 'lodash'
+import moment from 'moment'
 
 import Header from './components/Header'
 import StatsTable from './components/Table'
@@ -25,93 +26,98 @@ class Layout extends React.Component {
       tabs: [
         // REDUCTIONS
         {
-          label: 'Most Popular Site',
+          label: 'Site: Most Openings',
           action: 'listTopSites',
-          columns: ['Site', 'Unboxings'],
+          columns: ['Site URL', 'Openings'],
           rows: ['group', 'reduction'],
         },
+        {
+          label: 'Case: Most Openings',
+          action: 'listCaseMostOpenings',
+          columns: ['Case Name', 'Openings'],
+          rows: ['name', 'caseOpenings'],
+        },
+        {
+          label: 'Case: Most Profitable',
+          action: 'listCaseMostProfitable',
+          columns: ['Case Name', 'Users Spent', 'Users Profited'],
+          rows: ['name', 'spent', 'profit'],
+        },
+        {
+          label: 'Case: Best ROI',
+          action: 'listCaseBestRoi',
+          columns: ['Case Name', 'Price', 'ROI'],
+          rows: ['name', 'price', 'roi'],
+        },
         // {
-        //   label: 'User Unboxed',
-        //   action: 'listTopUsers',
-        //   columns: ['User', 'Unboxings'],
-        //   rows: ['group', 'reduction'],
+        //   label: 'Case: Best Chance',
+        //   action: 'listCaseBestChance',
+        //   columns: ['Case Name', 'Price', 'Avg. ROI', 'chance'],
+        //   rows: ['name', 'price', 'averageProfit', 'chance'],
         // },
         {
-          label: 'Most Popular Case',
-          action: 'listTopCases',
-          columns: ['Case', 'Openings'],
-          rows: ['group', 'reduction'],
+          label: 'Case: Most Awarded',
+          action: 'listCaseMostAwarded',
+          columns: ['Case Name', 'Awarded'],
+          rows: ['name', 'caseTotalAwarded'],
         },
         // leaderboards
         {
-          label: 'Case Unboxings',
+          label: 'User: Most Openings',
           action: 'caseOpenings',
-          columns: ['User', 'Unboxings'],
+          columns: ['User', 'Openings'],
           rows: ['username', 'caseOpenings'],
         },
         {
-          label: 'Case Awarded',
+          label: 'User: Most Awarded',
           action: 'caseTotalAwarded',
           columns: ['User', 'Awarded'],
           rows: ['username', 'caseTotalAwarded'],
         },
-        {
-          label: 'Trade Profit',
-          action: 'tradesProfit',
-          columns: ['User', 'Profit'],
-          rows: ['username', 'tradesProfit'],
-        },
-        {
-          label: 'Trade Value',
-          action: 'tradesTotalValue',
-          columns: ['User', 'Value'],
-          rows: ['username', 'tradesTotalValue'],
-        },
-        {
-          label: 'Trade Count',
-          action: 'tradesCount',
-          columns: ['User', 'Count'],
-          rows: ['username', 'tradesCount'],
-        },
-        {
-          label: 'Trades Incoming Count',
-          action: 'incomingTradesCount',
-          columns: ['User', 'Count'],
-          rows: ['username', 'incomingTradesCount'],
-        },
-        {
-          label: 'Trades Incoming Value',
-          action: 'incomingTradesTotal',
-          columns: ['User', 'Value'],
-          rows: ['username', 'incomingTradesTotal'],
-        },
-        {
-          label: 'Trades Outgoing Count',
-          action: 'outgoingTradesCount',
-          columns: ['User', 'Count'],
-          rows: ['username', 'outgoingTradesCount'],
-        },
-        {
-          label: 'Trades Outgoing Value',
-          action: 'outgoingTradesTotal',
-          columns: ['User', 'Value'],
-          rows: ['username', 'outgoingTradesTotal'],
-        },
+        // {
+        //   label: 'User: Trade Profit',
+        //   action: 'tradesProfit',
+        //   columns: ['User', 'Profit'],
+        //   rows: ['username', 'tradesProfit'],
+        // },
+        // {
+        //   label: 'User: Trade Value',
+        //   action: 'tradesTotalValue',
+        //   columns: ['User', 'Value'],
+        //   rows: ['username', 'tradesTotalValue'],
+        // },
+        // {
+        //   label: 'User: Trade Count',
+        //   action: 'tradesCount',
+        //   columns: ['User', 'Count'],
+        //   rows: ['username', 'tradesCount'],
+        // },
+        // {
+        //   label: 'User: Trades Incoming Count',
+        //   action: 'incomingTradesCount',
+        //   columns: ['User', 'Count'],
+        //   rows: ['username', 'incomingTradesCount'],
+        // },
+        // {
+        //   label: 'User: Trades Incoming Value',
+        //   action: 'incomingTradesTotal',
+        //   columns: ['User', 'Value'],
+        //   rows: ['username', 'incomingTradesTotal'],
+        // },
+        // {
+        //   label: 'User: Trades Outgoing Count',
+        //   action: 'outgoingTradesCount',
+        //   columns: ['User', 'Count'],
+        //   rows: ['username', 'outgoingTradesCount'],
+        // },
+        // {
+        //   label: 'User: Trades Outgoing Value',
+        //   action: 'outgoingTradesTotal',
+        //   columns: ['User', 'Value'],
+        //   rows: ['username', 'outgoingTradesTotal'],
+        // },
       ],
-      datasets: [
-        {
-          name: "Unboxings",
-          color: 'red',
-          values: this.randomData(),
-          chartType: 'bar'
-        },
-        {
-          name: "Awarded",
-          color: 'orange',
-          values: this.randomData(),
-          chartType: 'line'
-        },
-      ],
+      graphData: null,
     }
   }
 
@@ -120,7 +126,7 @@ class Layout extends React.Component {
     const { currentTab } = this.state
 
     this.changeTab(currentTab)
-
+    this.getDailySnapshots()
     // poll global stats.
     this.getGlobalStats()
     setInterval(this.getGlobalStats, 5000)
@@ -141,15 +147,25 @@ class Layout extends React.Component {
           value: globalStats.caseTotalAwarded,
           money: true,
         },
+        // {
+        //   label: 'Total Spent',
+        //   value: globalStats.caseTotalSpent,
+        //   money: true,
+        // },
         {
-          label: 'Total Trades',
-          value: globalStats.tradesCount,
-        },
-        {
-          label: 'Trade Value',
-          value: globalStats.tradesTotalValue,
+          label: `BEST UNBOXING: ${globalStats.bestItemUnboxed.name}`,
+          value: globalStats.bestItemUnboxed.price,
           money: true,
         },
+        // {
+        //   label: 'Total Trades',
+        //   value: globalStats.tradesCount,
+        // },
+        // {
+        //   label: 'Trade Value',
+        //   value: globalStats.tradesTotalValue,
+        //   money: true,
+        // },
       ],
     })
   }
@@ -161,8 +177,6 @@ class Layout extends React.Component {
     this.setState({ loading: true })
     return actions[action]()
       .then(data => {
-        console.log(data)
-
         const tab = tabs.find(tab => {
           return tab.action === action
         })
@@ -179,6 +193,7 @@ class Layout extends React.Component {
         })
       })
       .catch(err => {
+        console.error(err)
         this.setState({ loading: false })
       })
   }
@@ -187,19 +202,86 @@ class Layout extends React.Component {
     return Array.from({ length: 7 }, () => Math.floor(Math.random() * 10000))
   }
 
+  getDailySnapshots = async () => {
+    const { actions } = this.props
+    let list = await actions.listDailySnapshots()
+    list = lodash.sortBy(list, 'id')
+
+    console.log(list)
+
+    this.setState({
+      graphData: {
+        labels: list.map(row => {
+          return moment(row.id).format('dddd')
+        }),
+        datasets: [
+          {
+            name: 'Total Openings',
+            values: list.map(row => row.caseOpenings),
+            chartType: 'bar',
+          },
+          // {
+          //   name: 'Est. Site Rake',
+          //   values: list.map(row => row.caseTotalRake.toFixed(2)),
+          //   chartType: 'line',
+          // },
+          // {
+          //   name: 'Total Awarded',
+          //   values: list.map(row => row.caseTotalAwarded.toFixed(2)),
+          //   chartType: 'bar',
+          // },
+          // {
+          //   name: 'Total Spent',
+          //   values: list.map(row => row.caseTotalSpent.toFixed(2)),
+          //   chartType: 'bar',
+          // },
+          // {
+          //   name: 'Avg. Awarded',
+          //   values: list.map(row => {
+          //     return row.caseTotalAwarded / row.caseOpenings
+          //   }),
+          //   chartType: 'line',
+          // },
+        ],
+        yMarkers: [
+          {
+            label: 'Average',
+            value: lodash.meanBy(list, 'caseOpenings'),
+            // options: { labelPos: 'left' }, // default: 'right'
+          },
+        ],
+      },
+    })
+  }
+
   render() {
-    const { tabs, currentTab, loading, firstEvent, globalStats } = this.state
+    const {
+      tabs,
+      currentTab,
+      loading,
+      firstEvent,
+      globalStats,
+      graphData,
+    } = this.state
 
     return (
       <body className="has-navbar-fixed-top">
         <Header />
         <section className="section">
           <div className="container is-widescreen">
+            {/* {graphData ? (
+              <Graph
+                title="Daily Unboxings"
+                type="axis-mixed"
+                data={graphData}
+              />
+            ) : null} */}
             <GlobalStats stats={globalStats} />
-            <article className="message is-small is-warning">
+            <hr class="divider" />
+
+            {/* <article className="message is-small is-warning">
               <div className="message-header">
                 <p>Data Validity</p>
-                {/* <button className="delete is-small" aria-label="delete" /> */}
               </div>
               <div className="message-body">
                 The first event captured was on{' '}
@@ -207,15 +289,7 @@ class Layout extends React.Component {
                 is from the aforementioned day onward, updated in realtime, no
                 events prior to this date are available from wax.
               </div>
-            </article>
-            <Graph
-              title="Unboxings"
-              type="axis-mixed"
-              data={{
-                labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
-                datasets: this.state.datasets,
-              }}
-            />
+            </article> */}
             <div className="columns">
               <div className="column is-one-fifth">
                 <Menu

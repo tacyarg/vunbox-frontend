@@ -1,0 +1,12 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: vunbox-frontend-svc
+spec:
+  selector:
+    name: vunbox-frontend
+  type: LoadBalancer
+  ports:
+  - name: web
+    protocol: TCP
+    port: 80
