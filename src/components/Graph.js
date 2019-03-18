@@ -17,14 +17,19 @@ class Graph extends Component {
         regionFill: 1,
       },
       barOptions: {
-        spaceRatio: 0.2, // default: 1
+        spaceRatio: 0.1, // default: 1
         // stacked: 1    // default 0, i.e. adjacent
       },
       axisOptions: {
         xIsSeries: true, // default: false
         xAxisMode: 'tick', // default: 'span'
+        yAxisMode: 'tick',
       },
-      // valuesOverPoints: 1,
+      tooltipOptions: {
+        formatTooltipX: d => (d + '').toUpperCase(),
+        // formatTooltipY: d => d + ' openings',
+      },
+      valuesOverPoints: 1,
       // colors: ['red'],
       ...rest,
     })

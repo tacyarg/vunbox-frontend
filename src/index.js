@@ -238,7 +238,7 @@ class Layout extends React.Component {
         ],
         yMarkers: [
           {
-            label: 'Average',
+            label: 'Weekly Average',
             value: lodash.meanBy(list, 'caseOpenings'),
             // options: { labelPos: 'left' }, // default: 'right'
           },
@@ -262,15 +262,15 @@ class Layout extends React.Component {
         <Header />
         <section className="section">
           <div className="container is-widescreen">
-            {/* {graphData ? (
+            <GlobalStats stats={globalStats} />
+            <hr class="divider" />
+            {graphData ? (
               <Graph
-                title="Daily Unboxings"
+                title="Daily Openings"
                 type="axis-mixed"
                 data={graphData}
               />
-            ) : null} */}
-            <GlobalStats stats={globalStats} />
-            <hr class="divider" />
+            ) : null}
 
             {/* <article className="message is-small is-warning">
               <div className="message-header">

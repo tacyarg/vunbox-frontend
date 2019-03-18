@@ -15,9 +15,13 @@ const Header = () => (
           </h1>
         </div>
       </div>
-      {/* <div class="navbar-end">
-        <a class="navbar-item">Daily Snapshots</a>
-      </div> */}
+      <div class="navbar-end">
+        <div class="navbar-item">
+          <strong>{`Started: ${new Date(
+            1551362112986
+          ).toDateString()}`}</strong>
+        </div>
+      </div>
     </nav>
   </header>
 )
