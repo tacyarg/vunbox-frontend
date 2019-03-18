@@ -37,31 +37,24 @@ class Layout extends React.Component {
           columns: ['Case Name', 'Openings'],
           rows: ['name', 'caseOpenings'],
         },
-        {
-          label: 'Case: Most Profitable',
-          action: 'listCaseMostProfitable',
-          columns: ['Case Name', 'Users Spent', 'Users Profited'],
-          rows: ['name', 'spent', 'profit'],
-        },
+        // {
+        //   label: 'Case: Most Profitable',
+        //   action: 'listCaseMostProfitable',
+        //   columns: ['Case Name', 'Users Spent', 'Users Profited'],
+        //   rows: ['name', 'spent', 'profit'],
+        // },
         {
           label: 'Case: Best ROI',
           action: 'listCaseBestRoi',
           columns: ['Case Name', 'Price', 'ROI'],
           rows: ['name', 'price', 'roi'],
         },
-        // {
-        //   label: 'Case: Best Chance',
-        //   action: 'listCaseBestChance',
-        //   columns: ['Case Name', 'Price', 'Avg. ROI', 'chance'],
-        //   rows: ['name', 'price', 'averageProfit', 'chance'],
-        // },
         {
           label: 'Case: Most Awarded',
           action: 'listCaseMostAwarded',
           columns: ['Case Name', 'Awarded'],
           rows: ['name', 'caseTotalAwarded'],
         },
-        // leaderboards
         {
           label: 'User: Most Openings',
           action: 'caseOpenings',
