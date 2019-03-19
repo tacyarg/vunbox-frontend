@@ -1,26 +1,31 @@
 import React from 'react'
+import { Level, Heading } from 'react-bulma-components'
+
+const style = { textAlign: 'center' }
 
 class GlobalStats extends React.Component {
   render() {
     const { stats } = this.props
 
     return (
-      <nav className="level">
-        {stats.map(row => {
+      <Level renderAs="nav">
+        {stats.map(({ label, money, value }) => {
           return (
-            <div className="level-item has-text-centered" key={row.label}>
+            <Level.Item style={style} key={label}>
               <div>
-                <p className="heading">{row.label}</p>
-                {row.money ? (
-                  <p className="title">${row.value.toLocaleString()}</p>
+                <Heading renderAs="p" heading>
+                  {label}
+                </Heading>
+                {money ? (
+                  <Heading renderAs="p">${value.toLocaleString()}</Heading>
                 ) : (
-                  <p className="title">{row.value.toLocaleString()}</p>
+                  <Heading renderAs="p">{value.toLocaleString()}</Heading>
                 )}
               </div>
-            </div>
+            </Level.Item>
           )
         })}
-      </nav>
+      </Level>
     )
   }
 }

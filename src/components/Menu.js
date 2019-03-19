@@ -1,6 +1,7 @@
 import React from 'react'
+import { Menu } from 'react-bulma-components'
 
-class Menu extends React.Component {
+class TabMenu extends React.Component {
   constructor(props) {
     super(props)
     this.state = {}
@@ -16,27 +17,23 @@ class Menu extends React.Component {
     const { label, tabs, changeTab } = this.props
 
     return (
-      <aside className="menu">
-        <p className="menu-label">{label}</p>
-        <ul className="menu-list">
+      <Menu>
+        <Menu.List title={label}>
           {tabs.map(({ label, action }) => {
             return (
-              <li key={label}>
-                <a
-                  className={this.isActive(action)}
-                  onClick={e => {
-                    return changeTab(action)
-                  }}
-                >
-                  {label}
-                </a>
-              </li>
+              <Menu.List.Item
+                key={label}
+                className={this.isActive(action)}
+                onClick={e => changeTab(action)}
+              >
+                {label}
+              </Menu.List.Item>
             )
           })}
-        </ul>
-      </aside>
+        </Menu.List>
+      </Menu>
     )
   }
 }
 
-export default Menu
+export default TabMenu
