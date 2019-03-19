@@ -13,11 +13,11 @@ class Menu extends React.Component {
 
   render() {
     // const { tabs } = this.state
-    const { tabs, changeTab } = this.props
+    const { label, tabs, changeTab } = this.props
 
     return (
       <aside className="menu">
-        <p className="menu-label">Leaderboards</p>
+        <p className="menu-label">{label}</p>
         <ul className="menu-list">
           {tabs.map(({ label, action }) => {
             return (
