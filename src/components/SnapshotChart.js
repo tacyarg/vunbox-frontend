@@ -18,7 +18,7 @@ import {
 const style = styler([
   { key: 'spent', color: '#fd0d0d', width: 2 },
   { key: 'awarded', color: '#12a8e1', width: 2 },
-  { key: 'openings', color: '#ffd3ce' },
+  { key: 'openings', color: '#5bc0de' },
 ])
 
 class SnapshotChart extends React.Component {
