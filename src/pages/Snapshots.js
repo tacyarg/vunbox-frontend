@@ -74,8 +74,8 @@ class Snapshots extends React.Component {
     this.setState({
       content: {
         columns: [
-          ['Name', 'name'],
-          ['URL', 'mediaLink'],
+          ['Name', 'id'],
+          ['URL', 'link'],
           // ['Total Spent', 'caseTotalSpent'],
           // ['Total Awarded', 'caseTotalAwarded'],
           // ['Total Trades', 'tradesCount'],
