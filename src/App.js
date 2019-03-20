@@ -13,7 +13,7 @@ const App = ({ actions }) => (
     <Header />
     <Switch>
       <Redirect exact from="/" to="/leaderboards" />
-      
+
       <Route
         path="/leaderboards"
         render={props => {

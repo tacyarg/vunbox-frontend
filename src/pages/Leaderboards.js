@@ -7,7 +7,7 @@ import {
   Loader,
 } from 'react-bulma-components'
 
-import StatsTable from '../components/Table'
+import StatsTable from '../components/StatsTable'
 import GlobalStats from '../components/GlobalStats'
 import Menu from '../components/Menu'
 
@@ -136,7 +136,7 @@ class Layout extends React.Component {
             <GlobalStats stats={globalStats} />
             <hr className="divider" />
             <Columns>
-              <Columns.Column size="one-fifth">
+              <Columns.Column narrow>
                 <Menu
                   label="Leaderboards"
                   tabs={tabs}

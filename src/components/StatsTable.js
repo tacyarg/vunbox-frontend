@@ -6,8 +6,6 @@ class StatsTable extends React.Component {
     const { columns, rows } = this.props
     return (
       <Table bordered={true}>
-        {/* table className="table is-bordered is-striped is-narrow is-hoverable is-fullwidth" */}
-
         <thead>
           <tr>
             <th>Position</th>
