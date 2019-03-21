@@ -7,6 +7,7 @@ import Footer from './components/Footer'
 import NotFound from './pages/NotFound'
 import Leaderboards from './pages/Leaderboards'
 import Snapshots from './pages/Snapshots'
+import Documentation from './pages/Documentation'
 
 const App = ({ actions }) => (
   <>
@@ -24,6 +25,12 @@ const App = ({ actions }) => (
         path="/snapshots"
         render={props => {
           return <Snapshots actions={actions} />
+        }}
+      />
+      <Route
+        path="/documentation"
+        render={props => {
+          return <Documentation actions={actions} />
         }}
       />
 

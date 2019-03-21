@@ -40,6 +40,9 @@ class Header extends React.Component {
             <Link className="navbar-item" to="/snapshots">
               Daily Snapshots
             </Link>
+            <Link className="navbar-item" to="/documentation">
+              API Documentation
+            </Link>
           </Navbar.Container>
 
           {/* <Navbar.Container position="end">
