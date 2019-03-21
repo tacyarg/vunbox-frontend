@@ -59,7 +59,7 @@ class Snapshots extends React.Component {
           ['Case Openings', 'caseOpenings', 'integer'],
           ['Total Trades', 'tradesCount', 'integer'],
           ['Total Spent', 'caseTotalSpent', 'currency'],
-          ['Total Awarded', 'caseTotalAwarded', 'currency'],          
+          ['Total Awarded', 'caseTotalAwarded', 'currency'],
           ['Total Trade Value', 'tradesTotalValue', 'currency'],
         ],
         rows: list,
