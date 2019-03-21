@@ -56,11 +56,11 @@ class Snapshots extends React.Component {
       content: {
         columns: [
           ['Created', 'id'],
-          ['Case Openings', 'caseOpenings'],
-          ['Total Spent', 'caseTotalSpent'],
-          ['Total Awarded', 'caseTotalAwarded'],
-          ['Total Trades', 'tradesCount'],
-          ['Total Trade Value', 'tradesTotalValue'],
+          ['Case Openings', 'caseOpenings', 'integer'],
+          ['Total Trades', 'tradesCount', 'integer'],
+          ['Total Spent', 'caseTotalSpent', 'currency'],
+          ['Total Awarded', 'caseTotalAwarded', 'currency'],
+          ['Total Trade Value', 'tradesTotalValue', 'currency'],
         ],
         rows: list,
       },
@@ -75,7 +75,7 @@ class Snapshots extends React.Component {
       content: {
         columns: [
           ['Name', 'id'],
-          ['URL', 'link'],
+          ['URL', 'link', 'link'],
           // ['Total Spent', 'caseTotalSpent'],
           // ['Total Awarded', 'caseTotalAwarded'],
           // ['Total Trades', 'tradesCount'],
@@ -85,10 +85,25 @@ class Snapshots extends React.Component {
       },
     })
   }
-
-  isUrl(s) {
-    var regexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/
-    return regexp.test(s)
+  
+  renderWithType = (data, type) => {
+    switch(type) {
+      case 'integer':
+        return Number(data).toLocaleString(undefined, {
+          maximumFractionDigits: 0
+        })
+      case 'currency':
+        return '$' + Number(data).toLocaleString(undefined, {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2
+        })
+      case 'link':
+        return (
+          <a href={data}>Download Link</a>
+        )
+      default:
+        return data.toString()
+    }
   }
 
   render() {
@@ -126,23 +141,14 @@ class Snapshots extends React.Component {
                 </thead>
                 <tbody>
                   {content.rows.map((row, index) => {
-                    // const props = Object.keys(row)
                     return (
                       <tr key={index}>
-                        {content.columns.map(([key, value]) => {
-                          try {
-                            return (
-                              <th key={key + value}>
-                                {this.isUrl(row[value]) ? (
-                                  <a href={row[value]}>Download Link</a>
-                                ) : (
-                                  row[value].toLocaleString()
-                                )}
-                              </th>
-                            )
-                          } catch (e) {
-                            return <th key={key + value}>{row[value]}</th>
-                          }
+                        {content.columns.map(([key, value, type]) => {
+                          return (
+                            <th key={key + value}>
+                              {this.renderWithType(row[value], type)}
+                            </th>
+                          )
                         })}
                       </tr>
                     )
