@@ -20,45 +20,67 @@ class Layout extends React.Component {
       globalStats: [],
       firstEvent: new Date(1551362112986),
       loading: false,
-      currentTab: 'listTopSites',
-      columns: ['key', 'value'],
+      currentTab: 'listSiteMostOpenings',
+      columns: [],
       rows: [],
       tabs: [
         {
           label: 'Site: Most Openings',
-          action: 'listTopSites',
-          columns: ['Site URL', 'Openings'],
-          rows: ['group', 'reduction'],
+          action: 'listSiteMostOpenings',
+          columns: [
+            ['Site URL', 'id'],
+            ['Openings', 'caseOpenings', 'integer'],
+          ],
+        },
+        {
+          label: 'Site: Most Rake',
+          action: 'listSiteMostRake',
+          columns: [
+            ['Site URL', 'id'],
+            ['Openings', 'caseTotalSpent', 'currency'],
+            ['Est. Rake', 'caseTotalRake', 'currency'],
+          ],
         },
         {
           label: 'Case: Most Openings',
           action: 'listCaseMostOpenings',
-          columns: ['Case Name', 'Openings'],
-          rows: ['name', 'caseOpenings'],
+          columns: [
+            ['Case Name', 'name'],
+            ['Openings', 'caseOpenings', 'integer'],
+          ],
         },
         {
           label: 'Case: Best ROI',
           action: 'listCaseBestRoi',
-          columns: ['Case Name', 'Price', 'ROI'],
-          rows: ['name', 'price', 'roi'],
+          columns: [
+            ['Case Name', 'name'],
+            ['Price', 'price', 'currency'],
+            ['ROI', 'roi'],
+          ],
         },
         {
           label: 'Case: Most Awarded',
           action: 'listCaseMostAwarded',
-          columns: ['Case Name', 'Awarded'],
-          rows: ['name', 'caseTotalAwarded'],
+          columns: [
+            ['Case Name', 'name'],
+            ['Awarded', 'caseTotalAwarded', 'currency'],
+          ],
         },
         {
           label: 'User: Most Openings',
           action: 'caseOpenings',
-          columns: ['User', 'Openings'],
-          rows: ['username', 'caseOpenings'],
+          columns: [
+            ['User', 'username'],
+            ['Openings', 'caseOpenings', 'integer'],
+          ],
         },
         {
           label: 'User: Most Awarded',
           action: 'caseTotalAwarded',
-          columns: ['User', 'Awarded'],
-          rows: ['username', 'caseTotalAwarded'],
+          columns: [
+            ['User', 'username'],
+            ['Awarded', 'caseTotalAwarded', 'currency'],
+          ],
         },
       ],
     }
@@ -109,14 +131,12 @@ class Layout extends React.Component {
           return tab.action === action
         })
 
+        console.log(data)
+
         this.setState({
           currentTab: action,
           loading: false,
-          rows: data.map(row => {
-            return tab.rows.reduce((memo, key) => {
-              return { ...memo, [key]: lodash.get(row, key).toLocaleString() }
-            }, {})
-          }),
+          rows: data,
           columns: tab.columns,
         })
       })

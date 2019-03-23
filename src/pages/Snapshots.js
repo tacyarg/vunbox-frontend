@@ -10,6 +10,7 @@ import {
 
 import SnapshotChart from '../components/SnapshotChart'
 import moment from 'moment'
+import StatsTable from '../components/StatsTable'
 
 class Snapshots extends React.Component {
   constructor(props) {
@@ -85,26 +86,6 @@ class Snapshots extends React.Component {
       },
     })
   }
-  
-  renderWithType = (data, type) => {
-    switch(type) {
-      case 'integer':
-        return Number(data).toLocaleString(undefined, {
-          maximumFractionDigits: 0
-        })
-      case 'currency':
-        return '$' + Number(data).toLocaleString(undefined, {
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2
-        })
-      case 'link':
-        return (
-          <a href={data}>Download Link</a>
-        )
-      default:
-        return data.toString()
-    }
-  }
 
   render() {
     const { loading, tabs, currentTab, content } = this.state
@@ -131,30 +112,7 @@ class Snapshots extends React.Component {
             {loading ? (
               <Loader />
             ) : (
-              <Table bordered={true}>
-                <thead>
-                  <tr>
-                    {content.columns.map(([key, value]) => {
-                      return <th key={key}>{key}</th>
-                    })}
-                  </tr>
-                </thead>
-                <tbody>
-                  {content.rows.map((row, index) => {
-                    return (
-                      <tr key={index}>
-                        {content.columns.map(([key, value, type]) => {
-                          return (
-                            <th key={key + value}>
-                              {this.renderWithType(row[value], type)}
-                            </th>
-                          )
-                        })}
-                      </tr>
-                    )
-                  })}
-                </tbody>
-              </Table>
+              <StatsTable columns={content.columns} rows={content.rows} />
             )}
           </Box>
         </Container>
