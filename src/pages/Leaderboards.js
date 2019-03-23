@@ -37,7 +37,7 @@ class Layout extends React.Component {
           action: 'listSiteMostRake',
           columns: [
             ['Site URL', 'id'],
-            ['Openings', 'caseTotalSpent', 'currency'],
+            ['Total Spent', 'caseTotalSpent', 'currency'],
             ['Est. Rake', 'caseTotalRake', 'currency'],
           ],
         },
