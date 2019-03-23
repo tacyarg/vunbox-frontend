@@ -59,6 +59,7 @@ class Snapshots extends React.Component {
           ['Created', 'id'],
           ['Case Openings', 'caseOpenings', 'integer'],
           ['Case Total Spent', 'caseTotalSpent', 'currency'],
+          ['Case Est. Rake', 'caseTotalRake', 'currency'],
           ['Case Total Awarded', 'caseTotalAwarded', 'currency'],
           ['Total Trades', 'tradesCount', 'integer'],
           ['Total Trade Value', 'tradesTotalValue', 'currency'],
