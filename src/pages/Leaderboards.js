@@ -1,153 +1,151 @@
-import React from 'react'
+import React from "react";
 import {
   Section,
   Container,
   Box,
   Columns,
   Loader,
-} from 'react-bulma-components'
+  Notification
+} from "react-bulma-components";
 
-import StatsTable from '../components/StatsTable'
-import GlobalStats from '../components/GlobalStats'
-import Menu from '../components/Menu'
+import StatsTable from "../components/StatsTable";
+import GlobalStats from "../components/GlobalStats";
+import Menu from "../components/Menu";
 
-import lodash from 'lodash'
+import lodash from "lodash";
 
 class Layout extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       globalStats: [],
       firstEvent: new Date(1551362112986),
       loading: false,
-      currentTab: 'listSiteMostOpenings',
+      currentTab: "listSiteMostOpenings",
       columns: [],
       rows: [],
       tabs: [
         {
-          label: 'Site: Most Openings',
-          action: 'listSiteMostOpenings',
-          columns: [
-            ['Site URL', 'id'],
-            ['Openings', 'caseOpenings', 'integer'],
-          ],
+          label: "Site: Most Openings",
+          action: "listSiteMostOpenings",
+          columns: [["Site URL", "id"], ["Openings", "caseOpenings", "integer"]]
         },
         {
-          label: 'Site: Most Rake',
-          action: 'listSiteMostRake',
+          label: "Site: Most Rake",
+          action: "listSiteMostRake",
           columns: [
-            ['Site URL', 'id'],
-            ['Total Spent', 'caseTotalSpent', 'currency'],
-            ['Est. Rake', 'caseTotalRake', 'currency'],
-          ],
+            ["Site URL", "id"],
+            ["Total Spent", "caseTotalSpent", "currency"],
+            ["Est. Rake", "caseTotalRake", "currency"]
+          ]
         },
         {
-          label: 'Case: Most Openings',
-          action: 'listCaseMostOpenings',
+          label: "Case: Most Openings",
+          action: "listCaseMostOpenings",
           columns: [
-            ['Case Name', 'name'],
-            ['Openings', 'caseOpenings', 'integer'],
-          ],
+            ["Case Name", "name"],
+            ["Openings", "caseOpenings", "integer"]
+          ]
         },
         {
-          label: 'Case: Best ROI',
-          action: 'listCaseBestRoi',
+          label: "Case: Best ROI",
+          action: "listCaseBestRoi",
           columns: [
-            ['Case Name', 'name'],
-            ['Price', 'price', 'currency'],
-            ['ROI', 'roi'],
-          ],
+            ["Case Name", "name"],
+            ["Price", "price", "currency"],
+            ["ROI", "roi"]
+          ]
         },
         {
-          label: 'Case: Most Awarded',
-          action: 'listCaseMostAwarded',
+          label: "Case: Most Awarded",
+          action: "listCaseMostAwarded",
           columns: [
-            ['Case Name', 'name'],
-            ['Awarded', 'caseTotalAwarded', 'currency'],
-          ],
+            ["Case Name", "name"],
+            ["Awarded", "caseTotalAwarded", "currency"]
+          ]
         },
         {
-          label: 'User: Most Openings',
-          action: 'caseOpenings',
+          label: "User: Most Openings",
+          action: "caseOpenings",
           columns: [
-            ['User', 'username'],
-            ['Openings', 'caseOpenings', 'integer'],
-          ],
+            ["User", "username"],
+            ["Openings", "caseOpenings", "integer"]
+          ]
         },
         {
-          label: 'User: Most Awarded',
-          action: 'caseTotalAwarded',
+          label: "User: Most Awarded",
+          action: "caseTotalAwarded",
           columns: [
-            ['User', 'username'],
-            ['Awarded', 'caseTotalAwarded', 'currency'],
-          ],
-        },
-      ],
-    }
+            ["User", "username"],
+            ["Awarded", "caseTotalAwarded", "currency"]
+          ]
+        }
+      ]
+    };
   }
 
   componentDidMount() {
-    const { actions } = this.props
-    const { currentTab } = this.state
+    const { actions } = this.props;
+    const { currentTab } = this.state;
 
-    this.changeTab(currentTab)
+    this.changeTab(currentTab);
 
-    this.getGlobalStats()
-    setInterval(this.getGlobalStats, 5000)
+    this.getGlobalStats();
+    setInterval(this.getGlobalStats, 5000);
   }
 
   getGlobalStats = async () => {
-    const { actions } = this.props
-    const globalStats = await actions.getGlobalStats()
+    const { actions } = this.props;
+    const globalStats = await actions.getGlobalStats();
     // console.log(globalStats)
     return this.setState({
       globalStats: [
         {
-          label: 'Case Openings',
-          value: globalStats.caseOpenings,
+          label: "Case Openings",
+          value: globalStats.caseOpenings
         },
         {
-          label: 'Case Awarded',
+          label: "Case Awarded",
           value: globalStats.caseTotalAwarded,
-          money: true,
+          money: true
         },
         {
           label: `BEST UNBOXING: ${globalStats.bestItemUnboxed.name}`,
           value: globalStats.bestItemUnboxed.price,
-          money: true,
-        },
-      ],
-    })
-  }
+          money: true
+        }
+      ]
+    });
+  };
 
   changeTab = action => {
-    const { loading, tabs } = this.state
-    if (loading) return
-    const { actions } = this.props
-    this.setState({ loading: true })
+    const { loading, tabs } = this.state;
+    if (loading) return;
+    const { actions } = this.props;
+    this.setState({ loading: true });
     return actions[action]()
       .then(data => {
         const tab = tabs.find(tab => {
-          return tab.action === action
-        })
+          return tab.action === action;
+        });
 
-        console.log(data)
+        console.log(data);
 
         this.setState({
           currentTab: action,
           loading: false,
           rows: data,
-          columns: tab.columns,
-        })
+          columns: tab.columns
+        });
       })
       .catch(err => {
-        console.error(err)
-        this.setState({ loading: false })
-      })
-  }
+        console.error(err);
+        this.setState({ loading: false });
+      });
+  };
 
   render() {
-    const { tabs, currentTab, loading, globalStats } = this.state
+    const { tabs, currentTab, loading, globalStats, firstEvent } = this.state;
 
     return (
       <Section>
@@ -155,6 +153,12 @@ class Layout extends React.Component {
           <Box>
             <GlobalStats stats={globalStats} />
             <hr className="divider" />
+            <Notification>
+              The first event was captured on{" "}
+              <strong>{firstEvent.toString()}</strong>. All data displayed is
+              from the aforementioned day onward, updated in realtime, no events
+              prior to this date are available from wax.
+            </Notification>
             <Columns>
               <Columns.Column narrow>
                 <Menu
@@ -171,8 +175,8 @@ class Layout extends React.Component {
           </Box>
         </Container>
       </Section>
-    )
+    );
   }
 }
 
-export default Layout
+export default Layout;
