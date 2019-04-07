@@ -13,7 +13,7 @@ const App = ({ actions }) => (
   <>
     <Header />
     <Switch>
-      <Redirect exact from="/" to="/leaderboards" />
+      <Redirect exact from="/" to="/snapshots" />
 
       <Route
         path="/leaderboards"

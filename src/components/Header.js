@@ -34,11 +34,11 @@ class Header extends React.Component {
 
         <Navbar.Menu active={open}>
           <Navbar.Container position="end">
-            <Link className="navbar-item" to="/leaderboards">
-              Leaderboards
-            </Link>
             <Link className="navbar-item" to="/snapshots">
               Daily Snapshots
+            </Link>
+            <Link className="navbar-item" to="/leaderboards">
+              Leaderboards
             </Link>
             <Link className="navbar-item" to="/documentation">
               API Documentation

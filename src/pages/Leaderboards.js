@@ -129,7 +129,7 @@ class Layout extends React.Component {
           return tab.action === action;
         });
 
-        console.log(data);
+        // console.log(data);
 
         this.setState({
           currentTab: action,
