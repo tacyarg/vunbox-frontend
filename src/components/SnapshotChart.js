@@ -13,13 +13,16 @@ import {
   LineChart,
   BarChart,
   styler,
+  Legend,
 } from 'react-timeseries-charts'
 
-const style = styler([
+const columnNames = [
   { key: 'spent', color: '#fd0d0d', width: 2 },
-  { key: 'awarded', color: '#12a8e1', width: 2 },
+  { key: 'awarded', color: 'blue', width: 2 },
   { key: 'openings', color: '#5bc0de' },
-])
+]
+
+const style = styler(columnNames)
 
 class SnapshotChart extends React.Component {
   constructor(props) {
@@ -76,6 +79,11 @@ class SnapshotChart extends React.Component {
     const { openings, spent, awarded } = this.state
     return (
       <>
+        <Legend
+          categories={columnNames.map(({ key }) => ({ key, label: key }))}
+          style={style}
+          type="dot"
+        />
         {openings && spent && awarded ? (
           <Resizable>
             <ChartContainer
@@ -101,32 +109,32 @@ class SnapshotChart extends React.Component {
                     series={openings}
                     style={style}
                   />
-                  {/* <LineChart
+                  <LineChart
                     axis="spent"
                     breakLine={false}
                     series={awarded}
                     columns={['awarded']}
                     style={style}
-                    // interpolation="curveBasis"
-                  /> */}
-                  {/* <LineChart
-                  axis="spent"
-                  breakLine={false}
-                  series={spent}
-                  columns={['spent']}
-                  style={style}
-                  interpolation="curveBasis"
-                /> */}
+                    interpolation="curveBasis"
+                  />
+                  <LineChart
+                    axis="spent"
+                    breakLine={false}
+                    series={spent}
+                    columns={['spent']}
+                    style={style}
+                    interpolation="curveBasis"
+                  />
                 </Charts>
-                {/* <YAxis
+                <YAxis
                   id="spent"
-                  label="Awarded / Day"
+                  label="Value / Day"
                   min={0}
                   max={spent.max('spent')}
                   // format=".2f"
                   width="70"
                   // type="linear"
-                /> */}
+                />
               </ChartRow>
             </ChartContainer>
           </Resizable>
